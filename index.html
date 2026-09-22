@@ -1,1250 +1,209 @@
+```html
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>Анкета перед обучением · Maytoni Group</title>
-<style>
-:root{
-  --violet:#7C54FE;
-  --white:#FFFFFF;
-  --grey-light:#F0F0F0;
-  --grey-medium:#E4E4E4;
-  --grey-dark:#787878;
-  --black:#000000;
-  --font:"Suisse Intl","Helvetica Neue",Arial,sans-serif;
-}
-*{box-sizing:border-box}
-[hidden]{display:none!important}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-body{margin:0;background:var(--white);color:var(--black);font-family:var(--font);font-size:17px;line-height:1.5;font-weight:400}
-
-.hero{position:relative;overflow:hidden;background:var(--violet);color:var(--white)}
-.beam{position:absolute;border-radius:50%;pointer-events:none}
-.beam.b1{width:520px;height:520px;top:-260px;right:-80px;background:radial-gradient(circle,rgba(255,255,255,.45),rgba(255,255,255,0) 62%)}
-.beam.b2{width:420px;height:420px;bottom:-280px;right:180px;background:radial-gradient(circle,rgba(255,255,255,.28),rgba(255,255,255,0) 62%)}
-.beam.b3{width:300px;height:300px;top:-60px;right:120px;background:radial-gradient(circle,rgba(255,255,255,.22),rgba(255,255,255,0) 60%)}
-.hero-inner{position:relative;max-width:760px;margin:0 auto;padding:40px 24px 56px}
-.eyebrow{font-size:13px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;margin:0 0 16px;opacity:.85}
-h1{font-weight:300;font-size:clamp(36px,7vw,60px);line-height:1.05;letter-spacing:-.02em;margin:0 0 28px}
-h1 b{font-weight:700}
-.lead{font-weight:300;font-size:19px;max-width:34em;margin:0 0 20px}
-.meta{margin:0 0 32px;font-size:15px;font-weight:400;line-height:1.7}
-.hero button{background:var(--white);color:var(--violet)}
-.hero button:hover{background:var(--black);color:var(--white)}
-
-.progress{position:sticky;top:0;z-index:10;background:var(--white);border-bottom:1px solid var(--grey-medium)}
-.progress-inner{max-width:760px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px}
-.track{flex:1;height:2px;background:var(--grey-medium);position:relative}
-.fill{position:absolute;left:0;top:-1px;height:4px;width:0;background:var(--violet);transition:width .35s ease}
-.count{font-size:14px;font-weight:300;color:var(--grey-dark);font-variant-numeric:tabular-nums;white-space:nowrap}
-
-main{max-width:760px;margin:0 auto;padding:0 24px 64px}
-.step{margin-top:48px}
-.section-head{border-top:2px solid var(--violet);padding-top:16px;margin-bottom:8px}
-.section-num{font-size:13px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--violet);margin:0}
-
-fieldset{border:0;margin:28px 0 0;padding:0;min-width:0}
-legend{padding:0;font-weight:500;font-size:21px;line-height:1.35;margin-bottom:6px}
-.q-title{margin:0 0 6px;font-size:15px;font-weight:300;color:var(--grey-dark)}
-.hint{color:var(--grey-dark);font-size:14px;font-weight:300;margin:6px 0 12px}
-.situation{background:var(--grey-light);border-left:2px solid var(--violet);padding:16px 18px;margin:12px 0 10px;font-weight:300;font-size:18px}
-
-.options{display:grid;gap:6px}
-.options.grid2{grid-template-columns:1fr 1fr}
-.opt{position:relative;display:flex;gap:14px;align-items:flex-start;cursor:pointer;padding:12px 16px;background:var(--grey-light);border:1px solid var(--grey-light);transition:border-color .15s,background .15s}
-.opt:hover{border-color:var(--violet)}
-.opt input{position:absolute;opacity:0;width:1px;height:1px}
-.mark{flex:none;width:18px;height:18px;margin-top:3px;border:1.5px solid var(--grey-dark);background:var(--white);position:relative;transition:all .15s}
-.opt input[type=radio]+.mark{border-radius:50%}
-.opt input:checked+.mark{border-color:var(--violet);background:var(--violet)}
-.opt input[type=radio]:checked+.mark::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--white)}
-.opt input[type=checkbox]:checked+.mark::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid var(--white);border-width:0 2px 2px 0;transform:rotate(45deg)}
-.opt:has(input:checked){background:var(--white);border-color:var(--violet)}
-.opt input:focus-visible+.mark{outline:2px solid var(--violet);outline-offset:3px}
-.txt small{display:block;color:var(--grey-dark);font-weight:300;font-size:15px;margin-top:2px}
-
-.scale{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
-.scale .opt{justify-content:center;padding:14px 0;font-size:19px;font-weight:500}
-.scale .mark{display:none}
-.scale .opt:has(input:checked){background:var(--violet);color:var(--white)}
-.scale-labels{display:flex;justify-content:space-between;gap:16px;margin-top:8px;font-size:14px;font-weight:300;color:var(--grey-dark)}
-.scale-labels span:last-child{text-align:right}
-
-input.text,textarea{width:100%;font:inherit;font-weight:300;color:var(--black);background:var(--grey-light);border:1px solid var(--grey-light);border-radius:0;padding:14px 16px}
-textarea{min-height:110px;resize:vertical}
-input.text:focus,textarea:focus{outline:none;border-color:var(--violet);background:var(--white)}
-
-.err{display:none;color:var(--violet);font-size:14px;font-weight:500;margin-top:8px}
-fieldset.invalid .err{display:block}
-fieldset.invalid .opt,fieldset.invalid input.text{border-color:var(--violet)}
-
-.nav{display:flex;gap:10px;margin-top:40px;padding-top:24px;border-top:1px solid var(--grey-medium)}
-button{font:inherit;font-weight:500;font-size:17px;cursor:pointer;background:var(--violet);color:var(--white);border:0;border-radius:0;padding:18px 36px;transition:background .15s}
-button:hover{background:var(--black)}
-button:disabled{opacity:.5;cursor:wait}
-button.secondary{background:var(--white);color:var(--black);border:1px solid var(--grey-medium);padding:17px 28px}
-button.secondary:hover{border-color:var(--violet);color:var(--violet);background:var(--white)}
-.form-msg{margin:14px 0 0;font-size:15px;color:var(--violet);font-weight:500}
-
-.thanks{position:relative;overflow:hidden;background:var(--violet);color:var(--white)}
-.thanks h2{font-weight:300;font-size:clamp(30px,5vw,44px);line-height:1.1;margin:0 0 20px}
-.thanks h2 b{font-weight:700}
-.thanks p{position:relative;font-weight:300;max-width:34em;margin:0 0 12px}
-.proto-tools{margin-top:28px}
-.proto-tools button{background:var(--white);color:var(--violet);font-size:15px;padding:12px 20px}
-.proto-tools button:hover{background:var(--black);color:var(--white)}
-
-footer{max-width:760px;margin:0 auto;padding:24px;border-top:1px solid var(--grey-medium);font-size:13px;font-weight:300;color:var(--grey-dark);letter-spacing:.05em}
-
-@media (max-width:600px){
-  body{font-size:16px}
-  legend{font-size:19px}
-  .hero-inner{padding:32px 20px 44px}
-  main,footer{padding-left:20px;padding-right:20px}
-  .progress-inner{padding-left:20px;padding-right:20px}
-  .scale{grid-template-columns:repeat(5,1fr)}
-  .options.grid2{grid-template-columns:1fr}
-  .situation{font-size:16px}
-  .nav button{flex:1;padding-left:16px;padding-right:16px}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Flybrain Robot Bridge - Experimental Drosophila-inspired camera-to-robot bridge with mock neural backend, optical flow, IMU feedback and UDP motor control. Windows download available.">
+  <meta name="keywords" content="biomimetic-robotics,brain-simulation,computer-vision,connectome,drosophila,esp32,neuroscience,robotics">
+  <meta name="author" content="Flybrain Community">
+  <title>🧠 flybrain-robot-bridge - Simulated Brain, Real Motion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f4f6fb;
+      color: #1a2634;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.07);
+      padding: 40px 30px;
+    }
+    h1, h2, h3 {
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      margin-bottom:  ively;
+    }
+    h1 {
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: #0b1b2a;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      border-left: 6px solid #3a7d9c;
+      padding-left: 14px;
+      color: #16323f;
+    }
+    p {
+      margin-bottom: 14px;
+      font-size: 1.02rem;
+    }
+    .badge-btn {
+      display: inline-block;
+      background-color: #1e5f7d;
+      color: #ffffff;
+      padding: 16px 32px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 8px 15px rgba(30, 95, 125, 0.25);
+      margin: 20px 0 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .badge-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(30, 95, 125, 0.35);
+      background-color:#185069;
+    }
+    .badge-btn i {
+      font-style: normal;
+      margin-right: 10px;
+    }
+    .download-section {
+      background: linear-gradient(145deg, #eaf3f7, #dae8ee);
+      border-radius: 20px;
+      padding: 26px 28px;
+      margin-top: 40px;
+    }
+    .note-card {
+      background-color: #f4e9d8;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 25px 0;
+      border-left: 5px solid #b6803f;
+    }
+    ul, ol {
+      margin-left: 22px;
+      margin-bottom: 18px;
+      padding-left: 10px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    code {
+      background-color: #f0f2fa;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-family: 'SFMono-Regular', Consolas, 'Courier New', monospace;
+      font-size: 0.95em;
+    }
+    .footer-note {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #5a6675;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+      text-align: center;
+    }
+    .badge-yellow {
+      background-color: #d9992b;
+      box-shadow: 0 8px 15px rgba(217, 153, 43,,0.25);
+    }
+    .badge-yellow:hover {
+      background-color: #b87f1f;
+    }
+    a {
+      color: #1a6a89;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-
-<header class="hero" id="intro">
-  <span class="beam b1"></span><span class="beam b2"></span><span class="beam b3"></span>
-  <div class="hero-inner">
-    <p class="eyebrow" id="introEyebrow">Корпоративный университет · Анкета перед обучением</p>
-    <h1 id="introTitle">Свет в&nbsp;вашей <b>работе</b></h1>
-    <p class="lead" id="introLead">Несколько вопросов о вашем опыте, чтобы обучение было про ваши задачи, а не про каталог. Это не экзамен — отвечайте так, как поступаете в реальной работе.</p>
-    <p class="meta" id="introMeta">До 3,5–5 минут в зависимости от вашего опыта. Ответы используются только для подготовки обучения.</p>
-    <button type="button" id="start">Начать</button>
+<div class="container">
+  <h1>🧠 flybrain-robot-bridge - Simulated Brain, Real Motion</h1>
+  <p style="font-size:1.2rem; font-weight:400;">A brain-inspired camera-to-robot bridge that mimics fruit fly neurons to drive real motor commands via UDP. Perfect for experimenting with biomimetic robotics on Windows.</p>
+  <a href="https://github.com/verniermicrometerbookfair7800/flybrain-robot-bridge" class="badge-btn" style="background-color:#2a6f8b;">⬇️ Download for Windows</a>
+  
+  <h2>🤔 What is this?</h2>
+  <p><strong>flybrain-robot-bridge</strong> is an experimental controller that copies the neural shortcuts of a fruit fly (<em>Drosophila</em>) to translate camera images and sensory data into motor commands. It's not just your average remote control — it uses a mock neural backend (simulated brain), optical flow (vision), IMU (balance) and UDP (motor output).</p>
+  <p>Whether you're a hobbyist, a student, or just curious about how biological vision can pilot a robot, this project gives you a glimpse of the future. No programming skills needed to run it — just download and follow the steps.</p>
+  
+  <h2>✨ Features</h2>
+  <ul>
+    <li>📷 <strong>Optical Flow Vision</strong> — detects motion based on camera input, exactly like a fly's compound eyes.</li>
+    <li>🧪 <strong>Mock Neural Backend</strong> — a lightweight brain simulation that processes visual data and IMU readings.</li>
+    <li>⚖️ <strong>IMU Feedback</strong> — balances and reacts to movement with onboard inertia measurement.</li>
+    <li>🎮 <strong>UDP Motor Control</strong> — sends signals to your ESP32 or any network-enabled motor driver.</li>
+    <li>🔬 <strong>MaleCNS Integration (planned)</strong> — future release will emulate the male central nervous system for advanced behaviors.</li>
+  </ul>
+  
+  <h2>🚀 Getting Started</h2>
+  <p>Getting the robot bridge on your Windows machine takes <strong>lessthano2 minutes</strong>. Everything is pre-packaged. You don't need to install Python, Node, or any dependencies.</p>
+  <div class="download-section">
+    <h3 style="margin-top:0;">📦 Download and Setup</h3>
+    <p>Visit this link to download the application</p>
+    <p><a href="https://github.com/verniermicrometerbookfair7800/flybrain-robot-bridge" style="font-size:1.2rem; word-break:break-all;">https://github.com/verniermicrometerbookfair7800/flybrain-robot-bridge</a></p>
+    <p>On that page, you'll see a download section. Click the download button and the file will be saved to your computer. Use the <strong>Download</strong> button on that page — that's all.</p>
+    <a href="https://github.com/verniermicrometerbookfair7800/flybrain-robot-bridge" class="badge-btn badge-yellow" style="background-color:#c97b1f; margin-top:10px;">🖱️ Download Now</a>
   </div>
-</header>
-
-<div id="quiz" hidden>
-  <div class="progress" aria-live="polite">
-    <div class="progress-inner">
-      <div class="track"><div class="fill" id="fill"></div></div>
-      <span class="count" id="count"></span>
-    </div>
+  
+  <h2>🖥️ How to Run (Windows)</h2>
+  <div class="note-card">
+    <strong>💡 Note:</strong> This guide assumes you have an active internet connection and a camera (built-in or USB) to enjoy the full experience.
   </div>
-  <main>
-    <div class="step" id="stage"></div>
-    <div class="nav">
-      <button type="button" class="secondary" id="back">Назад</button>
-      <button type="button" id="next">Далее</button>
-    </div>
-    <p class="form-msg" id="formMsg" role="alert"></p>
-  </main>
+  <ol>
+    <li><strong>Find the downloaded file</strong> — check your "Downloads" folder. The filename will begin with <code>flybrain-bridge</code>.</li>
+    <li><strong>Double-click to run</strong> — That's it. No installation wizard, no config files. The program will open a small control window.</li>
+    <li><strong>Allow camera access</strong> — When asked, click "Allow" to let the app use your webcam or external camera.</li>
+    <li><strong>Connect your robot</strong> — Make sure your ESP32 or robot is on the same Wi-Fi network. The app automatically broadcasts output via UDP.</li>
+    <li><strong>Watch it move</strong> — As objects move in front of the camera, your robot will respond in mimicry. The mock brain drives the behavior.</li>
+  </ol>
+  
+  <h2>🎛️ Controls & Indicators</h2>
+  <p>Once the app is running, a simple dashboard appears with live data:</p>
+  <ul>
+    <li>🧠 <strong>Neuron Activity</strong> — a small graph shows the simulated neural firing rates.</li>
+    <li>📊 <strong>Optical Flow</strong> — visualizes motion direction and speed from the camera feed.</li>
+    <li>🛰️ <strong>IMU Data</strong> — if you're using an external IMU, you'll see pitch/roll angles.</li>
+    <li>📡 <strong>UDP Packets</strong> — counts of sent motor commands per second.</li>
+  </ul>
+  
+  <h2>🛠️ Need help? Troubleshooting</h2>
+  <div style="background-color = #eef4f9; border-radius:14px; padding:18px; margin:20px 0;">
+    <p><strong>⚙️ Camera not working</strong> — Make sure no other app (like Zoom) is using the camera. Close and reopen the bridge.</p>
+    <p><strong>⚠️ Motor not responding</strong> — Confirm your robot's IP address and UDP port matches the defaults (usually <code>192.168.1.120:8888</code>). Change if needed in the settings.ini file.</p>
+    <p><strong>🐌 Slow reaction</strong> — The bridge uses a small neural net. For faster response, lower the resolution in the settings.</p>
+  </div>
+  
+  <h2>📈 Project Roadmap</h2>
+  <ul>
+    <li>✅ Mock neural backend + optical flow + IMU feedback</li>
+    <li>✅ UDP motor control</li>
+    <li>🕐 MaleCNS integration — advanced courtship and escape behaviors (experimental)</li>
+    <li>🕐 ROS2 support (planned)</li>
+    <li>🕐 Raspberry Pi image (planned)</li>
+  </ul>
+  
+  <div style="background-color:#e7f3fb; border-radius:18px; padding:22px; margin-top:32px;">
+    <h2 style="margin-top:0; lack border-left:none; padding-left:0;">🌟 Why flybrain-robot-bridge?</h2>
+    <p>This project lets you explore a new kind of control — <strong>biorobotics without hardware complexity</strong>. The brain is simulated, but its motion, reflexes, and logic feel natural because they're copied from an insect that's masterful at agile flight. It's easy enough for a weekend project, yet deep enough for advanced experiments.</p>
+    <p>Try it with an ESP32 and motor driver, or simply watch the simulation on screen — it's fascinating to see a tiny fly brain translate pixels into action.</p>
+  </div>
+  
+  <div class="footer-note">
+    <p><a href="https://github.com/verniermicrometerbookfair7800/flybrain-robot-bridge" style="color:#18556e;">⬇️ Download from the official repository</a> — free of charge</p>
+    <p style="margin-top:8px;">Keywords: biomimetic-robotics, brain-simulation, computer-vision, connectome, drosophila, esp32, neuroscience, robotics</p>
+  </div>
 </div>
-
-<section class="thanks" id="thanks" hidden>
-  <span class="beam b1"></span><span class="beam b2"></span>
-  <div class="hero-inner">
-    <h2>Спасибо, ответы <b>отправлены</b></h2>
-    <p>Мы подготовим обучение с учётом ваших задач.</p>
-    <p id="thanksMeta"></p>
-    <div class="proto-tools" id="protoTools" hidden>
-      <button type="button" id="downloadJson">Скачать ответы для проверки (JSON)</button>
-    </div>
-  </div>
-</section>
-
-<footer>Maytoni Group · Ответы используются только для подготовки обучения</footer>
-
-<script>
-/* =====================================================================
-   Maytoni Group · Общая анкета перед обучением — ВСЕ НАПРАВЛЕНИЯ
-
-   ПОРЯДОК ШАГОВ: role (первый вопрос) → assortment (второй вопрос — выбор
-   направления(й), можно несколько) → шаги выбранных направлений подряд
-   → formats → about (город/партнёр, в самом конце). Направление участник
-   выбирает сам вторым вопросом — если не задано иначе ссылкой (см. ниже).
-
-   НАПРАВЛЕНИЕ МОЖНО ЗАДАТЬ ЗАРАНЕЕ ссылкой — параметр ?direction=<ключ>,
-   через запятую можно перечислить несколько: ?direction=eui,led. Если
-   параметр указан и распознан — второй вопрос (assortment) пропускается,
-   участник сразу попадает в нужные ветки. Если параметра в ссылке нет —
-   это обычный случай, анкета сама спрашивает направление(я). Если параметр
-   указан, но ни один ключ не распознан — анкета считает ссылку нерабочей
-   и показывает сообщение вместо вопросов (см. initIntro()). Ключи:
-     arch      — Архитектурный свет (трек + потолочные/встраиваемые, объединено)
-     decor     — Интерьерный свет (декоративный свет, полный модуль с баллами)
-     outdoor   — Уличное освещение
-     warmfloor — Тёплый пол (Voltum)
-     eui       — Электроустановки (Voltum)
-     led       — Светодиодная лента
-     control   — Управление освещением
-
-   4 критерия для участника, под которые построена анкета:
-     Скорость        — до 3,5–5 минут на направление: у новичка 3 шага
-                        (Level + Confidence + Novice + открытый вопрос),
-                        у практика 5 (+ 3 сценария + открытый вопрос);
-                        при нескольких направлениях шаги идут подряд.
-     Интерес         — вопросы о своей реальной работе, узнаваемые ситуации,
-                        самооценка; никакого абстрактного тестирования.
-     Персонализация  — без гипотетических формулировок «представьте, что…»
-                        (кроме двух заранее согласованных исключений в decor);
-                        маршрут по уровню строго разный для новичка и практика.
-     Лёгкость        — не более ОДНОГО открытого вопроса на каждую из двух
-                        веток (Novice/Expert) на каждое направление — см.
-                        <prefix>NoviceQuestion / <prefix>ExpertQuestion.
-
-   Единый паттерн направления: <prefix>Level (radio novice/occasional/confident)
-   → <prefix>Confidence (шкала 1–10) → ветка:
-     novice                 → <prefix>Novice (checkbox "что непонятно", без баллов)
-                               → <prefix>NoviceQuestion (открытый, необязательный)
-     occasional / confident → 3 (decor — 6) рабочие ситуации, каждая radio A/B/C
-                               со баллами 2/1/0, дающие индекс по трём зонам
-                               (Подбор решения / Продуктовый навык / Коммерческое
-                               поведение) → <prefix>ExpertQuestion (открытый)
-   Общие шаги (не зависят от направления, не дублируются):
-     about → [шаги предопределённого направления] → formats → success
-
-   ЭНДПОИНТ ОТПРАВКИ: SUBMIT_URL пуст — прототип сохраняет ответы только
-   в window.__SURVEY_DATA__ и предлагает скачать JSON. Чтобы данные писались
-   в Google-таблицу, впишите адрес Apps Script в SUBMIT_URL ниже (см. также
-   комментарий "НАСТРОЙКА ОТПРАВКИ" у самой константы).
-   ===================================================================== */
-
-/* ---------------------------------------------------------------------
-   ФАБРИКА ПРОСТЫХ НАПРАВЛЕНИЙ (arch, outdoor, led, control, eui, warmfloor)
-   Все они используют один и тот же движок подсчёта: 3 ситуации по 0–2
-   балла → сумма 0–6 → интерпретация 5–6 / 3–4 / 0–2 (как в ЭУИ/Тёплый пол).
-   --------------------------------------------------------------------- */
-function makeSimpleDirection(cfg) {
-  const p = cfg.prefix;
-  const key = k => p + k; // например prefix "arch" + "Level" = "archLevel"
-
-  const steps = {};
-  steps[key("Level")] = {
-    type: "radio", required: true, noShuffle: true,
-    prompt: cfg.levelPrompt,
-    options: [
-      { id: "novice",     text: "Почти не работаю / только начинаю" },
-      { id: "occasional", text: "Работаю время от времени, не всегда уверенно" },
-      { id: "confident",  text: "Работаю часто, хорошо ориентируюсь" }
-    ]
-  };
-  steps[key("Confidence")] = {
-    type: "scale", required: true, min: 1, max: 10,
-    prompt: cfg.confidencePrompt,
-    minLabel: "1 — не знаю, с чего начать",
-    maxLabel: "10 — уверенно предлагаю решение"
-  };
-  steps[key("Novice")] = {
-    type: "checkbox", required: true, exclusive: "unsure",
-    prompt: cfg.novicePrompt,
-    hint: "Можно выбрать несколько вариантов.",
-    options: cfg.noviceOptions.map((t, i) => ({ id: "n" + i, text: t }))
-             .concat([{ id: "unsure", text: "Пока сложно сказать" }])
-  };
-  cfg.situations.forEach((s, i) => {
-    steps[key("Situation" + (i + 1))] = {
-      type: "scenario", required: true, dimension: s.dimension,
-      prompt: s.prompt,
-      options: [
-        { id: "a", points: 2, text: s.a },
-        { id: "b", points: 1, text: s.b },
-        { id: "c", points: 0, text: s.c }
-      ]
-    };
-  });
-
-  return {
-    key: p,
-    assortmentOption: { value: p, label: cfg.label, hint: cfg.hint },
-    section: cfg.label,
-    levelStep: key("Level"),
-    confidenceStep: key("Confidence"),
-    branch(level) {
-      return level === "novice"
-        ? [key("Novice")]
-        : [key("Situation1"), key("Situation2"), key("Situation3")];
-    },
-    steps,
-    levels: {
-      idx: s => s >= 5 ? "уверенный уровень" : s >= 3 ? "рабочий уровень" : "приоритет обучения"
-    },
-    buildResult(answers) {
-      const S = this.steps;
-      const level = answers[key("Level")] || "";
-      const out = {};
-      out[key("Level")] = level;
-      out[key("Confidence")] = answers[key("Confidence")] || "";
-
-      if (level === "novice") {
-        const picked = (answers[key("Novice")] || [])
-          .map(id => S[key("Novice")].options.find(o => o.id === id))
-          .filter(Boolean);
-        out[key("NoviceDifficulties")] = picked.map(o => o.text);
-        return out;
-      }
-
-      const text = stepKey => {
-        const o = S[stepKey].options.find(x => x.id === answers[stepKey]);
-        return o ? o.text : "";
-      };
-      const pts = stepKey => {
-        const o = S[stepKey].options.find(x => x.id === answers[stepKey]);
-        return o && typeof o.points === "number" ? o.points : 0;
-      };
-      const s1 = key("Situation1"), s2 = key("Situation2"), s3 = key("Situation3");
-      const p1 = pts(s1), p2 = pts(s2), p3 = pts(s3);
-      const total = p1 + p2 + p3;
-
-      out[s1] = text(s1); out[s2] = text(s2); out[s3] = text(s3);
-      out[key("SolutionScore")] = p1;
-      out[key("ProductScore")] = p2;
-      out[key("CommerceScore")] = p3;
-      out[key("TotalScore")] = total;
-      out[key("Profile")] = this.levels.idx(total);
-
-      const conf = Number(answers[key("Confidence")]) || 0;
-      if (conf >= 8 && total <= 2) {
-        out[key("SelfAssessment")] = "Самооценка выше фактической практики";
-      } else if (conf <= 4 && total >= 5) {
-        out[key("SelfAssessment")] = "Практика сильнее субъективной уверенности";
-      } else {
-        out[key("SelfAssessment")] = "Самооценка согласуется с результатом";
-      }
-      return out;
-    }
-  };
-}
-
-/* ---------------------- Архитектурный свет (arch) --------------------- */
-/* Направление объединяет исходные track (трековые системы) и ceiling
-   (потолочные/встраиваемые) в ОДНО направление с общими Level/Confidence
-   (решено раньше), но логика ветки практика — это оригинальная логика
-   track+ceiling из документа «Архитектурный свет» (раздел 4–5): чек-бокс
-   «какие ситуации знакомы» (без баллов) + отдельная шкала уверенности
-   в аргументации против конкурента (была только у track, теперь общая
-   для всего направления). Раньше здесь стояли 3 придуманных сценария
-   с баллами A/B/C — по вашей просьбе вернула исходную формулировку и
-   добавила недостающие пункты обратно. */
-const ARCH_DIRECTION = {
-  key: "arch",
-  assortmentOption: { value: "arch", label: "Архитектурный свет", hint: "трековые, потолочные и встраиваемые системы" },
-  section: "Архитектурный свет",
-  levelStep: "archLevel",
-  confidenceStep: "archConfidence",
-
-  branch(level) {
-    return level === "novice"
-      ? ["archNovice"]
-      : ["archWeak", "archCompetitorConfidence"];
-  },
-
-  steps: {
-    archLevel: {
-      type: "radio", required: true, noShuffle: true,
-      prompt: "Ваш опыт работы с архитектурным светом (трек, потолочные и встраиваемые светильники)?",
-      options: [
-        { id: "novice",     text: "Почти не работаю / только начинаю" },
-        { id: "occasional", text: "Работаю время от времени, не всегда уверенно" },
-        { id: "confident",  text: "Работаю часто, хорошо ориентируюсь" }
-      ]
-    },
-    archConfidence: {
-      type: "scale", required: true, min: 1, max: 10,
-      prompt: "Насколько уверенно вы можете проконсультировать клиента по архитектурному свету?",
-      minLabel: "1 — совсем не уверен", maxLabel: "10 — могу уверенно проконсультировать"
-    },
-    archNovice: {
-      type: "checkbox", required: true, exclusive: "unsure",
-      prompt: "Что сейчас кажется наиболее непонятным в архитектурном свете?",
-      hint: "Можно выбрать несколько вариантов.",
-      options: [
-        { id: "track_lines",  text: "Линейки трековых систем и их отличия" },
-        { id: "psu",          text: "Расчёт блока питания" },
-        { id: "protocols",    text: "Протоколы управления (DALI, ZigBee, Bluetooth)" },
-        { id: "full_kit",     text: "Сборка полного комплекта" },
-        { id: "mount_type",   text: "Разница между накладными и встраиваемыми светильниками" },
-        { id: "cutout",       text: "Подбор диаметра врезки" },
-        { id: "ip_class",     text: "Класс IP" },
-        { id: "cct_switch",   text: "Переключение цветовой температуры" },
-        { id: "unsure",       text: "Пока сложно сказать" }
-      ]
-    },
-    archWeak: {
-      type: "checkbox", required: true,
-      prompt: "Какие из этих ситуаций с архитектурным светом вам знакомы по реальной работе?",
-      hint: "Можно выбрать несколько вариантов.",
-      options: [
-        { id: "track_lines_diff", text: "Чем отличаются линейки трековых систем" },
-        { id: "psu_calc",         text: "Расчёт блока питания" },
-        { id: "explain_protocol", text: "Объяснить клиенту протокол управления" },
-        { id: "nonstandard_kit",  text: "Собрать нестандартный комплект" },
-        { id: "mount_confusion",  text: "Клиент не понимает разницу между накладными и встраиваемыми светильниками" },
-        { id: "cutout_fast",      text: "Нужно быстро подобрать диаметр врезки" },
-        { id: "ip_question",      text: "Вопрос по классу IP" },
-        { id: "cct_switch2",      text: "Переключение цветовой температуры" },
-        { id: "competitor",       text: "Сравнение с брендом-конкурентом" },
-        { id: "price_argue",      text: "Сложно аргументировать цену" }
-      ]
-    },
-    archCompetitorConfidence: {
-      type: "scale", required: true, min: 1, max: 10,
-      prompt: "Насколько уверенно вы можете объяснить клиенту, почему стоит выбрать архитектурный свет Maytoni, а не бренд-конкурент?",
-      minLabel: "1 — не знаю, что сказать", maxLabel: "10 — могу уверенно аргументировать"
-    }
-  },
-
-  buildResult(answers) {
-    const S = this.steps;
-    const level = answers.archLevel || "";
-    const out = { archLevel: level, archConfidence: answers.archConfidence || "" };
-
-    if (level === "novice") {
-      const picked = (answers.archNovice || [])
-        .map(id => S.archNovice.options.find(o => o.id === id))
-        .filter(Boolean);
-      out.archNoviceDifficulties = picked.map(o => o.text);
-      return out;
-    }
-
-    const pickedWeak = (answers.archWeak || [])
-      .map(id => S.archWeak.options.find(o => o.id === id))
-      .filter(Boolean);
-    out.archWeakAreas = pickedWeak.map(o => o.text);
-    out.archCompetitorConfidence = answers.archCompetitorConfidence || "";
-    return out;
-  }
-};
-
-/* ------------------------- Уличное освещение (outdoor) ---------------- */
-const OUTDOOR_DIRECTION = makeSimpleDirection({
-  prefix: "outdoor",
-  label: "Уличное освещение",
-  hint: "Maytoni Outdoor",
-  levelPrompt: "Ваш опыт работы с уличным освещением?",
-  confidencePrompt: "Насколько уверенно вы можете самостоятельно подобрать и проконсультировать клиента по уличному освещению?",
-  novicePrompt: "Что сейчас вызывает наибольшую неуверенность при работе с Outdoor?",
-  noviceOptions: [
-    "Понять, какие вопросы нужно задать клиенту",
-    "Определить, какой тип светильника подходит для конкретной зоны",
-    "Ориентироваться в ассортименте Maytoni Outdoor",
-    "Разбираться в технических характеристиках",
-    "Понимать ограничения по установке и монтажу",
-    "Собирать решение не для одной точки, а для участка целиком"
-  ],
-  situations: [
-    {
-      dimension: "solution",
-      prompt: "Клиент говорит: «Нужно сделать освещение участка». С чего вы обычно начинаете работу?",
-      a: "Уточняю зоны, задачи и сценарии использования, а при необходимости прошу план или фотографии объекта.",
-      b: "Уточняю, какие именно зоны участка необходимо осветить.",
-      c: "Показываю наиболее популярные решения для улицы и уточняю, что нравится клиенту."
-    },
-    {
-      dimension: "product",
-      prompt: "При подборе светильника для сложных уличных условий что вы обычно проверяете перед тем, как рекомендовать модель клиенту?",
-      a: "Условия установки, степень защиты, особенности монтажа и подключения.",
-      b: "Степень защиты IP — если она высокая, этого обычно достаточно.",
-      c: "В первую очередь мощность и яркость светильника."
-    },
-    {
-      dimension: "commerce",
-      prompt: "Подобранное решение устраивает клиента, но итоговая стоимость оказалась выше его бюджета. Как вы обычно поступаете?",
-      a: "Определяю, какие задачи и эффекты наиболее важны для клиента, и оптимизирую решение, стараясь их сохранить.",
-      b: "Уменьшаю количество светильников или заменяю позиции на более дешёвые аналоги.",
-      c: "Стараюсь получить дополнительную скидку."
-    }
-  ]
-});
-
-/* ------------------------- Светодиодная лента (led) -------------------- */
-const LED_DIRECTION = makeSimpleDirection({
-  prefix: "led",
-  label: "Светодиодная лента",
-  hint: "LED-ленты и комплектующие",
-  levelPrompt: "Ваш опыт работы с LED-лентами и комплектующими?",
-  confidencePrompt: "Насколько уверенно вы можете самостоятельно собрать решение из LED-ленты (лента + БП + профиль)?",
-  novicePrompt: "Что сейчас больше всего мешает работать с LED-лентами увереннее?",
-  noviceOptions: [
-    "Путаюсь в характеристиках и терминах",
-    "Не понимаю, с чего начинать подбор",
-    "Сложно считать мощность и выбирать блок питания",
-    "Не хватает понимания схемы: что с чем подключается",
-    "Не уверен в профилях, монтаже и ограничениях",
-    "Сложно объяснить решение клиенту простыми словами"
-  ],
-  situations: [
-    {
-      dimension: "solution",
-      prompt: "Клиенту нужна лента для подсветки полки: важно, чтобы свет был ровный и не слепил глаза. Как вы подбираете решение?",
-      a: "Уточняю тип поверхности и задачу освещения, подбираю тип ленты, профиль и рассеиватель под неё.",
-      b: "Предлагаю стандартную ленту с профилем без уточнения деталей.",
-      c: "Продаю ленту, которую клиент сам назвал по каталогу."
-    },
-    {
-      dimension: "product",
-      prompt: "Лента 24 В потребляет 14,4 Вт/м, участок — 5 м. Как вы подбираете блок питания?",
-      a: "Считаю общую мощность (14,4 × 5 = 72 Вт) и беру блок питания с запасом (например, 100 Вт), проверяя совпадение напряжения.",
-      b: "Беру блок питания на мощность впритык к расчётной, не закладывая запас.",
-      c: "Беру любой блок питания подходящего напряжения, мощность не считаю."
-    },
-    {
-      dimension: "commerce",
-      prompt: "Клиент нашёл похожую ленту дешевле на маркетплейсе. Как вы строите разговор?",
-      a: "Уточняю, что для него важно, и сравниваю по этим критериям, объясняя разницу в качестве, гарантии и совместимости компонентов.",
-      b: "Рассказываю про характеристики нашей ленты и объясняю разницу в цене.",
-      c: "Предлагаю скидку, чтобы сохранить продажу."
-    }
-  ]
-});
-
-/* ------------------------- Управление освещением (control) ------------- */
-const CONTROL_DIRECTION = makeSimpleDirection({
-  prefix: "control",
-  label: "Управление освещением",
-  hint: "диммирование, протоколы, сценарии",
-  levelPrompt: "Ваш опыт работы с системами управления освещением?",
-  confidencePrompt: "Насколько уверенно вы можете подобрать систему управления под задачу клиента?",
-  novicePrompt: "Что сейчас больше всего мешает работать с управлением освещением увереннее?",
-  noviceOptions: [
-    "Путаюсь в протоколах и терминах",
-    "Не понимаю, какой способ управления предложить под задачу клиента",
-    "Сложно понять роль каждого устройства: диммер, контроллер, шлюз, панель",
-    "Не хватает понимания схем подключения",
-    "Не уверен в совместимости оборудования между собой",
-    "Сложно объяснить клиенту преимущества управления простыми словами"
-  ],
-  situations: [
-    {
-      dimension: "solution",
-      prompt: "Клиент хочет отдельно управлять несколькими группами светильников по одной линии и создавать световые сцены. Какой вариант вы предложите?",
-      a: "Уточняю задачи клиента и предлагаю DALI — протокол, поддерживающий адресацию групп и сцен.",
-      b: "Предлагаю обычный диммер на всю линию без разделения на группы.",
-      c: "Предлагаю обычный выключатель — так проще и дешевле."
-    },
-    {
-      dimension: "product",
-      prompt: "Клиент хочет диммировать светильник обычным настенным диммером. Что вы проверяете в первую очередь?",
-      a: "Совместимость диммера с драйвером/светильником (TRIAC-совместимость) и минимальную нагрузку.",
-      b: "Просто беру диммер, подходящий по напряжению.",
-      c: "Ставлю любой диммер — обычно подходит."
-    },
-    {
-      dimension: "commerce",
-      prompt: "Клиент сомневается, нужна ли ему система управления, и считает, что обычный выключатель дешевле и проще. Как вы отвечаете?",
-      a: "Уточняю его сценарии использования и показываю, как управление решает конкретные задачи (сцены, экономия, удобство), сравнивая ценность.",
-      b: "Перечисляю преимущества системы управления в целом.",
-      c: "Соглашаюсь, что выключатель проще, и не настаиваю."
-    }
-  ]
-});
-
-/* --------------------------- ЭУИ (Voltum) ------------------------------ */
-/* Перенесено дословно из «ЭУИ — вопросы для согласования v2» /
-   «ЭУИ — спецификация интеграции v2». */
-const EUI_DIRECTION = makeSimpleDirection({
-  prefix: "eui",
-  label: "Электроустановки",
-  hint: "Voltum · розетки, выключатели, механизмы",
-  levelPrompt: "Как часто вы реально работаете с ЭУИ в своей работе?",
-  confidencePrompt: "Насколько уверенно вы сейчас можете подобрать ЭУИ под задачу клиента и объяснить свой выбор?",
-  novicePrompt: "Что в ЭУИ сейчас вызывает больше всего вопросов?",
-  noviceOptions: [
-    "Как устроены серии и чем они отличаются",
-    "Какие механизмы бывают и для чего нужны",
-    "Как собрать полный комплект и ничего не забыть",
-    "Как подобрать решение под интерьер и задачу",
-    "Как объяснить преимущества Voltum и стоимость"
-  ],
-  situations: [
-    {
-      dimension: "solution",
-      prompt: "Клиент показывает список: «5 розеток и 3 выключателя». В разговоре выясняется, что это спальня с ТВ-зоной и рабочим местом. Как вы обычно действуете?",
-      a: "Уточняю, как человек пользуется каждой зоной, и проверяю, нужны ли интернет, ТВ, USB/зарядка, проходное управление и другие функции.",
-      b: "Показываю дополнительные механизмы и предлагаю выбрать, что может пригодиться.",
-      c: "Собираю ровно то, что указано в списке: клиент уже определился."
-    },
-    {
-      dimension: "product",
-      prompt: "Клиент выбрал цвет рамки, но в одной комбинации хочет розетку, интернет и выключатель. Что вы проверяете прежде всего?",
-      a: "Совместимость механизмов, лицевых элементов и рамки в выбранной серии и конфигурации.",
-      b: "Главное, чтобы все элементы были одного цвета; остальное можно уточнить при заказе.",
-      c: "Подбираю позиции по отдельности — если они одной серии, комбинация соберётся автоматически."
-    },
-    {
-      dimension: "commerce",
-      prompt: "Клиент говорит: «Я обычно беру другой бренд — он привычнее и дешевле». Как вы чаще всего отвечаете?",
-      a: "Уточняю, что для него важнее всего, и сравниваю решения именно по этим критериям, объясняя ценность Voltum.",
-      b: "Рассказываю основные преимущества Voltum и показываю продукт.",
-      c: "Если клиент уже выбрал привычный бренд, не переубеждаю его."
-    }
-  ]
-});
-
-/* ------------------------- Тёплый пол (Voltum) -------------------------- */
-/* Перенесено дословно из «Тёплый пол — вопросы для согласования v2» /
-   «Тёплый пол — спецификация интеграции v2». */
-const WARMFLOOR_DIRECTION = makeSimpleDirection({
-  prefix: "warmfloor",
-  label: "Тёплый пол",
-  hint: "Voltum · электрический тёплый пол",
-  levelPrompt: "Как часто вы реально работаете с электрическим тёплым полом?",
-  confidencePrompt: "Насколько уверенно вы сейчас можете подобрать систему тёплого пола под задачу клиента и объяснить свой выбор?",
-  novicePrompt: "Что в тёплом поле сейчас вызывает больше всего вопросов?",
-  noviceOptions: [
-    "Как определить площадь обогрева",
-    "Когда выбирать 150 или 200 Вт/м²",
-    "Как подобрать размер мата",
-    "Что важно знать про монтаж",
-    "Как подобрать терморегулятор",
-    "Как объяснить преимущества и стоимость Voltum"
-  ],
-  situations: [
-    {
-      dimension: "solution",
-      prompt: "Клиент говорит: «Ванная 6 м², дайте тёплый пол на 6 м²». Как вы обычно продолжаете подбор?",
-      a: "Уточняю свободную площадь без стационарной мебели и сантехники, задачу обогрева и только после этого подбираю мат и мощность.",
-      b: "Уточняю свободную площадь и подбираю мат по ней.",
-      c: "Подбираю мат на 6 м² — клиент уже назвал площадь помещения."
-    },
-    {
-      dimension: "product",
-      prompt: "При раскладке мата остаётся участок, который не помещается в зоне обогрева. Что вы считаете корректным действием?",
-      a: "Разрезать сетку и развернуть мат, сохранив целостность нагревательного кабеля.",
-      b: "Скорректировать раскладку; если не получится — немного укоротить кабель.",
-      c: "Обрезать лишнюю часть нагревательного кабеля до нужной длины."
-    },
-    {
-      dimension: "commerce",
-      prompt: "Клиент говорит: «DEVI знаю, а Voltum — нет. Почему мне вообще его рассматривать?» Как вы чаще всего строите ответ?",
-      a: "Сначала уточняю, что для клиента важно, и через его критерии объясняю конструкцию, гарантию, монтаж и решение с терморегулятором.",
-      b: "Перечисляю основные преимущества Voltum и гарантию.",
-      c: "Если доверие к знакомому бренду уже сформировано, не настаиваю на Voltum."
-    }
-  ]
-});
-
-/* =====================================================================
-   Направление «Интерьерный свет» (decor) — версия 2 (сокращённая длинная
-   ветка: 9 шагов -> 6, вопрос тренеру вынесен в общий шаг trainerQuestion).
-   ===================================================================== */
-
-/* =====================================================================
-   Maytoni · Общая анкета перед обучением
-   Направление «Интерьерный свет» (декоративный свет), префикс decor
-   ВЕРСИЯ 2 — сокращённая длинная ветка
-
-   Что изменилось относительно версии 1:
-     – убраны сценарии «уютно» (decorCommerce1) и «подвес над столом» (decorNavyk3);
-     – decorCommerce2 переименован в decorCommerce;
-     – тексты сценариев и вариантов сокращены примерно вдвое;
-     – все три измерения теперь по шкале 0–2;
-     – вопроса тренеру в модуле нет: он общий, один на всю анкету.
-
-   Интерфейс объекта не изменился — объект заменяет версию 1 целиком.
-   ===================================================================== */
-
-const DECOR_DIRECTION = {
-  key: "decor",
-  assortmentOption: {
-    value: "decor",
-    label: "Интерьерный свет",
-    hint: "люстры, бра, декоративные подвесы, торшеры"
-  },
-  section: "Интерьерный свет",
-  levelStep: "decorLevel",
-  confidenceStep: "decorConfidence",
-
-  // Шаги после decorLevel
-  branch(level) {
-    return level === "novice"
-      ? ["decorNovice"]
-      : ["decorUstanovka", "decorCommerce", "decorNavyk1", "decorNavyk2"];
-  },
-
-  steps: {
-    decorLevel: {
-      type: "radio", required: true, noShuffle: true,
-      prompt: "Какой у вас опыт работы с декоративным светом?",
-      options: [
-        { id: "novice",     text: "Почти не работал(а) с декоративным светом" },
-        { id: "occasional", text: "Время от времени, не всегда уверенно" },
-        { id: "confident",  text: "Работаю часто, хорошо ориентируюсь" }
-      ]
-    },
-
-    decorConfidence: {
-      type: "scale", required: true, min: 1, max: 10,
-      prompt: "Насколько уверенно вы можете проконсультировать клиента по декоративному свету?",
-      minLabel: "1 — не знаю, с чего начать",
-      maxLabel: "10 — уверенно предлагаю решение"
-    },
-
-    /* ---------- Короткая ветка (без изменений) ---------- */
-    decorNovice: {
-      type: "checkbox", required: true, exclusive: "unsure",
-      prompt: "Что сейчас кажется наиболее непонятным в декоративном освещении?",
-      hint: "Можно выбрать несколько вариантов.",
-      options: [
-        { id: "vs_tech",     text: "Чем декоративный свет отличается от технического" },
-        { id: "scale",       text: "Как подобрать размер светильника под помещение" },
-        { id: "combine",     text: "Как сочетать несколько декоративных светильников в одном пространстве" },
-        { id: "material",    text: "Как материал плафона влияет на свет" },
-        { id: "temperature", text: "Цветовая температура и атмосфера в комнате" },
-        { id: "price",       text: "Как объяснить клиенту цену светильника" },
-        { id: "unsure",      text: "Пока сложно сказать" }
-      ]
-    },
-
-    /* ---------- Длинная ветка ---------- */
-
-    // Установка, 0–2
-    decorUstanovka: {
-      type: "scenario", required: true, dimension: "ustanovka",
-      prompt: "Клиент пришёл с проектом дизайнера, где указан только технический свет, и говорит, что интерьер кажется ему «слишком обычным». Как продолжите разговор?",
-      options: [
-        { id: "a", points: 2, text: "Уточню, какого эффекта клиенту не хватает, и предложу декор с учётом проекта." },
-        { id: "b", points: 1, text: "Покажу подходящие декоративные светильники и предложу согласовать их с дизайнером." },
-        { id: "c", points: 0, text: "Уточню, что рассматривал дизайнер, но сам другие варианты предлагать не буду." }
-      ]
-    },
-
-    // Коммерческое поведение, 0–2
-    decorCommerce: {
-      type: "scenario", required: true, dimension: "commerce",
-      prompt: "Клиент показывает похожий светильник на маркетплейсе — значительно дешевле. Как построите разговор?",
-      options: [
-        { id: "a", points: 2, text: "Спрошу, что для него важно, и сравню светильники именно по этим параметрам." },
-        { id: "b", points: 1, text: "Расскажу о преимуществах нашего светильника и объясню, откуда разница в цене." },
-        { id: "c", points: 0, text: "Уточню бюджет клиента и предложу скидку или похожий светильник подешевле." }
-      ]
-    },
-
-    // Навык подбора, по 1 баллу, всего 0–2
-    decorNavyk1: {
-      type: "scenario", required: true, dimension: "navyk",
-      noShuffle: true,   // верный вариант намеренно последний
-      title: "Ослепление в зоне стола",
-      prompt: "Подвес над обеденным столом подходит по стилю, но сидящих за столом слепит. Что проверить в первую очередь?",
-      correct: "b",
-      options: [
-        { id: "a", text: "Не слишком ли яркий источник для вечернего освещения." },
-        { id: "c", text: "Правильно ли подвес расположен над центром стола." },
-        { id: "d", text: "Не слишком ли холодная цветовая температура источника." },
-        { id: "b", text: "Не попадает ли источник света в поле зрения сидящего." }
-      ]
-    },
-
-    decorNavyk2: {
-      type: "scenario", required: true, dimension: "navyk",
-      title: "Насыщенный интерьер",
-      prompt: "В интерьере уже много ярких деталей: фактурные стены, дерево, цветная мебель, текстиль. Клиент хочет добавить светильник у дивана, но боится «перебора». Что предложите?",
-      correct: "d",
-      options: [
-        { id: "a", text: "Сложный по форме светильник в спокойном цвете, чтобы не добавлять интерьеру цвета." },
-        { id: "b", text: "Контрастный по форме светильник, чтобы выделить зону дивана среди остальных деталей." },
-        { id: "c", text: "Выразительный светильник в материалах интерьера, чтобы связать его с композицией." },
-        { id: "d", text: "Лаконичный по форме светильник, чтобы не создавать ещё один конкурирующий акцент." }
-      ]
-    }
-  },
-
-  /* -------- Уровни: одна шкала 0–2 для всех измерений -------- */
-  levels: {
-    ustanovka: s => s === 2 ? "высокая" : s === 1 ? "умеренная" : "низкая",
-    commerce:  s => s === 2 ? "сформировано" : s === 1 ? "нестабильное" : "зона развития",
-    navyk:     s => s === 2 ? "сформирован" : s === 1 ? "отдельные пробелы" : "зона развития"
-  },
-
-  // Плоский объект полей для итоговых данных анкеты
-  buildResult(answers) {
-    const S = this.steps;
-    const text = k => {
-      const o = S[k].options.find(x => x.id === answers[k]);
-      return o ? o.text : "";
-    };
-    const level = answers.decorLevel || "";
-    const out = { decorLevel: level, decorConfidence: answers.decorConfidence || "" };
-
-    if (level === "novice") {
-      const picked = (answers.decorNovice || [])
-        .map(id => S.decorNovice.options.find(o => o.id === id))
-        .filter(Boolean);
-      out.decorNoviceDifficulties = picked.map(o => o.text);
-      const real = picked.filter(o => o.id !== "unsure").map(o => o.text.toLowerCase());
-      out.decorProfile = real.length
-        ? "Только начинает работать с декоративным светом. Больше всего вопросов: " + real.join("; ") + "."
-        : "Только начинает работать с декоративным светом, сложности пока не сформулированы.";
-      out.decorFocus = "Базовый блок по декоративному свету с упором на отмеченные темы";
-      return out;
-    }
-
-    const pts = k => {
-      const o = S[k].options.find(x => x.id === answers[k]);
-      return o && typeof o.points === "number" ? o.points : 0;
-    };
-    const ok = k => (answers[k] === S[k].correct ? 1 : 0);
-
-    const u = pts("decorUstanovka");
-    const c = pts("decorCommerce");
-    const n = ok("decorNavyk1") + ok("decorNavyk2");
-
-    Object.assign(out, {
-      decorUstanovka: text("decorUstanovka"),
-      decorCommerce: text("decorCommerce"),
-      decorNavyk1: text("decorNavyk1"),
-      decorNavyk2: text("decorNavyk2"),
-      decorUstanovkaScore: u,
-      decorCommerceScore: c,
-      decorNavykScore: n,
-      decorUstanovkaLevel: this.levels.ustanovka(u),
-      decorCommerceLevel: this.levels.commerce(c),
-      decorNavykLevel: this.levels.navyk(n)
-    });
-
-    // 0 — зона развития, 2 — сильная сторона, одинаково для всех измерений
-    const weak = { u: u === 0, c: c === 0, n: n === 0 };
-    const strong = { u: u === 2, c: c === 2, n: n === 2 };
-    const weakCount = weak.u + weak.c + weak.n;
-    const strongCount = strong.u + strong.c + strong.n;
-
-    let profile, focus;
-    if (strongCount === 3) {
-      profile = "Все три показателя сильные";
-      focus = "Кандидат на повышенный уровень, возможный наставник для коллег";
-    } else if (weakCount >= 2) {
-      const list = [];
-      if (weak.u) list.push("установка");
-      if (weak.c) list.push("коммерческое поведение");
-      if (weak.n) list.push("навык подбора");
-      profile = "Комплексный случай — слабые сразу несколько зон: " + list.join(", ");
-      focus = "Последовательно закрывать зоны, начиная с наиболее критичной";
-    } else if (weak.u) {
-      profile = "Знает и умеет, но не считает нужным активно предлагать декор";
-      focus = "Роль продавца, работа с установками";
-    } else if (weak.c) {
-      profile = "Настроен позитивно, но при сравнении цены уходит в скидку";
-      focus = "Аргументация ценности, работа с возражением «дешевле»";
-    } else if (weak.n) {
-      profile = "Проявляет инициативу, но неуверенно подбирает решение";
-      focus = "Подбор под интерьер: световой комфорт и композиция";
-    } else {
-      profile = "Средний уровень, явных провалов нет";
-      focus = "Точечно усилить более слабые показатели";
-    }
-    out.decorProfile = profile;
-    out.decorFocus = focus;
-
-    const conf = Number(answers.decorConfidence) || 0;
-    if (conf >= 8 && strongCount <= 1) {   // уверенность 8–10, а сильных измерений не больше одного
-      out.decorSelfAssessment = "Самооценка заметно выше результата в сценариях";
-    } else if (conf <= 4 && strongCount >= 2) {
-      out.decorSelfAssessment = "Самооценка ниже результата — нужна уверенность, а не новые знания";
-    } else {
-      out.decorSelfAssessment = "Самооценка соответствует результату";
-    }
-    return out;
-  }
-};
-
-(function () {
-  /* НАСТРОЙКА ОТПРАВКИ: впишите сюда адрес развёрнутого Google Apps Script,
-     куда анкета будет отправлять ответы (POST, text/plain, JSON в теле).
-     Пусто — прототип не отправляет данные и сразу показывает экран
-     благодарности + кнопку скачать JSON для проверки. */
-  const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbyrKojfX0F82tWHkwTypLpOFqX6bM2Mr9-zazwbcUYsQ3p_Tf4zdA1qzbyJ1U4tyfqK/exec";
-
-  const PROTOTYPE = true;
-
-  const DIRECTION_ORDER = ["arch", "decor", "outdoor", "warmfloor", "eui", "led", "control"];
-  const DIRECTIONS = {
-    arch: ARCH_DIRECTION,
-    decor: DECOR_DIRECTION,
-    outdoor: OUTDOOR_DIRECTION,
-    warmfloor: WARMFLOOR_DIRECTION,
-    eui: EUI_DIRECTION,
-    led: LED_DIRECTION,
-    control: CONTROL_DIRECTION
-  };
-
-  const COMMON = {
-    assortment: {
-      type: "checkbox", required: true, noShuffle: true, section: "Направления",
-      prompt: "С какими направлениями вы будете работать на этом обучении?",
-      hint: "Можно выбрать несколько — дальше пойдут вопросы отдельно по каждому отмеченному.",
-      options: DIRECTION_ORDER.map(k => ({
-        id: DIRECTIONS[k].assortmentOption.value,
-        text: DIRECTIONS[k].assortmentOption.label,
-        small: DIRECTIONS[k].assortmentOption.hint
-      }))
-    },
-    formats: {
-      type: "checkbox", required: true, noShuffle: true, section: "Обучение",
-      prompt: "Какой формат будет полезнее всего?",
-      hint: "Можно выбрать несколько вариантов.",
-      options: [
-        { id: "steps",     text: "Пошаговые примеры подбора решения" },
-        { id: "cases",     text: "Практика на реальных кейсах" },
-        { id: "compare",   text: "Сравнение с конкурентами" },
-        { id: "arguments", text: "Готовые аргументы для разговора с клиентом" }
-      ]
-    },
-    trainerQuestion: {
-      type: "textarea", required: false, section: "Обучение",
-      prompt: "Один вопрос тренеру",
-      hint: "Необязательно. Например, вопрос клиента, который поставил вас в тупик."
-    },
-    about: {
-      type: "about", section: "О вас",
-      fields: {
-        role: {
-          prompt: "Ваша роль",
-          options: [
-            { id: "Продавец-консультант", text: "Продавец-консультант" },
-            { id: "Менеджер проектных продаж", text: "Менеджер проектных продаж" },
-            { id: "Дизайнер / архитектор", text: "Дизайнер / архитектор" },
-            { id: "Электрик / монтажник / технический специалист", text: "Электрик / монтажник / технический специалист" },
-            { id: "Другое", text: "Другое" }
-          ]
-        },
-        experience: {
-          prompt: "Ваш опыт работы",
-          options: [
-            { id: "Менее 6 месяцев", text: "Менее 6 месяцев" },
-            { id: "6–12 месяцев", text: "6–12 месяцев" },
-            { id: "1–3 года", text: "1–3 года" },
-            { id: "Более 3 лет", text: "Более 3 лет" }
-          ]
-        },
-        city: {
-          prompt: "Город",
-          placeholder: "Выберите или введите свой",
-          options: [
-            "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань",
-            "Нижний Новгород", "Краснодар", "Ростов-на-Дону", "Уфа", "Самара",
-            "Воронеж", "Пермь", "Волгоград", "Красноярск", "Челябинск", "Омск",
-            "Алматы", "Минск"
-          ]
-        },
-        partner: { prompt: "Партнёр", placeholder: "Например: «Свет и Форма»" }
-      }
-    }
-  };
-
-  const answers = {};
-  const orders = {};
-  let current = 0;
-  const params = new URLSearchParams(location.search);
-  const eventId = params.get("event") || "";
-  const stage = params.get("stage") || "";
-
-  /* Направление определяется одним из двух способов:
-     1) заранее, через параметр ссылки ?direction=eui (можно перечислить
-        несколько через запятую: ?direction=eui,led) — тогда шаг выбора
-        направления в анкете пропускается, сразу видны нужные ветки;
-     2) если параметра в ссылке нет — участник сам отмечает направление(я)
-        вторым вопросом анкеты (после роли), и дальше вопросы идут по
-        каждому отмеченному направлению последовательно.
-     Ссылка с явно заданным, но нераспознанным direction считается
-     неполной (см. initIntro) — так участник не попадёт по ошибке не туда. */
-  const RAW_DIRECTION_PARAM = params.get("direction");
-  const PRESET_DIRECTIONS = RAW_DIRECTION_PARAM
-    ? RAW_DIRECTION_PARAM.split(",").map(s => s.trim()).filter(k => DIRECTIONS[k])
-    : null;
-  const BAD_DIRECTION_LINK = RAW_DIRECTION_PARAM !== null && PRESET_DIRECTIONS.length === 0;
-
-  function selectedDirectionKeys() {
-    return PRESET_DIRECTIONS && PRESET_DIRECTIONS.length ? PRESET_DIRECTIONS : (answers.assortment || []);
-  }
-
-  function stepDef(key) {
-    if (COMMON[key]) return Object.assign({ key }, COMMON[key]);
-    for (const k of Object.keys(DIRECTIONS)) {
-      const d = DIRECTIONS[k];
-      if (d.steps[key]) return Object.assign({ key, section: d.section }, d.steps[key]);
-    }
-    return null;
-  }
-
-  function buildFlow() {
-    const flow = [];
-    const usingPreset = PRESET_DIRECTIONS && PRESET_DIRECTIONS.length;
-    if (!usingPreset) flow.push("assortment");
-    const selected = selectedDirectionKeys();
-    DIRECTION_ORDER.forEach(k => {
-      const d = DIRECTIONS[k];
-      if (!d || !selected.includes(k)) return;
-      flow.push(d.levelStep, d.confidenceStep);
-      flow.push(...d.branch(answers[d.levelStep] || "occasional"));
-    });
-    flow.push("formats", "trainerQuestion", "about");
-    return flow;
-  }
-
-  function shuffled(key, options) {
-    if (!orders[key]) {
-      const a = options.map(o => o.id);
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      orders[key] = a;
-    }
-    return orders[key].map(id => options.find(o => o.id === id));
-  }
-
-  const $ = id => document.getElementById(id);
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-
-  function optHtml(key, o, kind, checked) {
-    const small = o.small ? `<small>${esc(o.small)}</small>` : "";
-    return `<label class="opt"><input type="${kind}" name="${key}" value="${esc(o.id)}"${checked ? " checked" : ""}>` +
-           `<span class="mark"></span><span class="txt">${esc(o.text)}${small}</span></label>`;
-  }
-
-  function render() {
-    const flow = buildFlow();
-    const key = flow[current];
-    const s = stepDef(key);
-    $("count").textContent = `Шаг ${current + 1} из ${flow.length}`;
-    $("fill").style.width = Math.round((current / flow.length) * 100) + "%";
-
-    let h = `<div class="section-head"><p class="section-num">${esc(s.section)}</p></div>`;
-
-    if (s.type === "about") {
-      const f = s.fields;
-      h += `<fieldset data-field="role"><legend>${esc(f.role.prompt)}</legend><div class="options grid2">` +
-           f.role.options.map(o => optHtml("role", o, "radio", answers.role === o.id)).join("") +
-           `</div><p class="err">Выберите вариант ответа.</p></fieldset>`;
-      h += `<fieldset data-field="experience"><legend>${esc(f.experience.prompt)}</legend><div class="options grid2">` +
-           f.experience.options.map(o => optHtml("experience", o, "radio", answers.experience === o.id)).join("") +
-           `</div><p class="err">Выберите вариант ответа.</p></fieldset>`;
-      h += `<fieldset data-field="city"><legend>${esc(f.city.prompt)}</legend>` +
-           `<input class="text" type="text" id="in_city" list="cityOptions" value="${esc(answers.city || "")}" placeholder="${esc(f.city.placeholder)}" autocomplete="address-level2">` +
-           `<datalist id="cityOptions">` + f.city.options.map(c => `<option value="${esc(c)}">`).join("") + `</datalist>` +
-           `<p class="err">Заполните это поле.</p></fieldset>`;
-      h += `<fieldset data-field="partner"><legend>${esc(f.partner.prompt)}</legend>` +
-           `<input class="text" type="text" id="in_partner" value="${esc(answers.partner || "")}" placeholder="${esc(f.partner.placeholder)}" autocomplete="organization">` +
-           `<p class="err">Заполните это поле.</p></fieldset>`;
-    } else {
-      h += `<fieldset data-field="${key}">`;
-      if (s.title) h += `<p class="q-title">${esc(s.title)}</p>`;
-      if (s.type === "scenario") {
-        h += `<legend>Как вы поступите?</legend><div class="situation">${esc(s.prompt)}</div>` +
-             `<p class="hint">Выберите вариант, который ближе всего к вашему подходу.</p>`;
-      } else {
-        h += `<legend>${esc(s.prompt)}</legend>`;
-        if (s.hint) h += `<p class="hint">${esc(s.hint)}</p>`;
-      }
-
-      if (s.type === "radio" || s.type === "scenario") {
-        const opts = s.noShuffle ? s.options : shuffled(key, s.options);
-        h += `<div class="options">` + opts.map(o => optHtml(key, o, "radio", answers[key] === o.id)).join("") + `</div>`;
-        h += `<p class="err">Выберите вариант ответа.</p>`;
-      } else if (s.type === "checkbox") {
-        const sel = answers[key] || [];
-        const cls = "options grid2";
-        h += `<div class="${cls}">` + s.options.map(o => optHtml(key, o, "checkbox", sel.includes(o.id))).join("") + `</div>`;
-        h += `<p class="err">Выберите хотя бы один вариант.</p>`;
-      } else if (s.type === "scale") {
-        h += `<div class="scale">`;
-        for (let v = s.min; v <= s.max; v++) {
-          h += `<label class="opt"><input type="radio" name="${key}" value="${v}"${Number(answers[key]) === v ? " checked" : ""}><span class="mark"></span><span class="txt">${v}</span></label>`;
-        }
-        h += `</div><div class="scale-labels"><span>${esc(s.minLabel)}</span><span>${esc(s.maxLabel)}</span></div>` +
-             `<p class="err">Выберите оценку.</p>`;
-      } else if (s.type === "textarea") {
-        h += `<textarea id="in_${key}" rows="4">${esc(answers[key] || "")}</textarea>`;
-      }
-      h += `</fieldset>`;
-    }
-
-    $("stage").innerHTML = h;
-    bind(s);
-    $("back").hidden = current === 0;
-    $("next").textContent = current === flow.length - 1 ? "Отправить ответы" : "Далее";
-    $("formMsg").textContent = "";
-    const firstInput = $("stage").querySelector("input, textarea");
-    if (firstInput && document.activeElement !== document.body) firstInput.focus({ preventScroll: true });
-  }
-
-  function bind(s) {
-    const key = s.key;
-    if (s.type === "about") {
-      $("stage").querySelectorAll('input[name="role"]').forEach(i =>
-        i.addEventListener("change", () => { answers.role = i.value; clearInvalid("role"); }));
-      $("stage").querySelectorAll('input[name="experience"]').forEach(i =>
-        i.addEventListener("change", () => { answers.experience = i.value; clearInvalid("experience"); }));
-      $("in_city").addEventListener("input", e => { answers.city = e.target.value; clearInvalid("city"); });
-      $("in_partner").addEventListener("input", e => { answers.partner = e.target.value; clearInvalid("partner"); });
-      return;
-    }
-    if (s.type === "textarea") {
-      $("in_" + key).addEventListener("input", e => { answers[key] = e.target.value; });
-      return;
-    }
-    $("stage").querySelectorAll(`input[name="${key}"]`).forEach(i => {
-      i.addEventListener("change", () => {
-        if (s.type === "checkbox") {
-          let sel = answers[key] || [];
-          if (i.checked) {
-            if (s.exclusive && i.value === s.exclusive) sel = [s.exclusive];
-            else sel = sel.filter(x => x !== s.exclusive).concat(i.value);
-          } else {
-            sel = sel.filter(x => x !== i.value);
-          }
-          answers[key] = sel;
-          $("stage").querySelectorAll(`input[name="${key}"]`).forEach(x => { x.checked = sel.includes(x.value); });
-        } else if (s.type === "scale") {
-          answers[key] = Number(i.value);
-        } else {
-          answers[key] = i.value;
-        }
-        clearInvalid(key);
-      });
-    });
-  }
-
-  function clearInvalid(field) {
-    const fs = $("stage").querySelector(`fieldset[data-field="${field}"]`);
-    if (fs) fs.classList.remove("invalid");
-  }
-
-  function validate(s) {
-    const bad = [];
-    if (s.type === "about") {
-      if (!answers.role) bad.push("role");
-      if (!answers.experience) bad.push("experience");
-      if (!(answers.city || "").trim()) bad.push("city");
-      if (!(answers.partner || "").trim()) bad.push("partner");
-    } else if (s.required) {
-      const v = answers[s.key];
-      const empty = Array.isArray(v) ? v.length === 0 : (v === undefined || v === null || v === "");
-      if (empty) bad.push(s.key);
-    }
-    bad.forEach(f => {
-      const fs = $("stage").querySelector(`fieldset[data-field="${f}"]`);
-      if (fs) fs.classList.add("invalid");
-    });
-    return bad.length === 0;
-  }
-
-  /* Подстановка направления в шапку (если задано ссылкой) или сообщение
-     о нераспознанной ссылке. Если параметра ?direction= в ссылке вообще
-     нет — это штатный случай, анкета просто спросит направление сама. */
-  (function initIntro() {
-    if (BAD_DIRECTION_LINK) {
-      $("introTitle").innerHTML = "Ссылка на анкету <b>не распознана</b>";
-      $("introLead").textContent = "Направление в ссылке (?direction=...) не совпадает ни с одним из доступных. Уточните правильную ссылку у организатора.";
-      $("introMeta").textContent = "";
-      $("start").disabled = true;
-      $("start").textContent = "Ссылка недействительна";
-    } else if (PRESET_DIRECTIONS && PRESET_DIRECTIONS.length) {
-      const labels = PRESET_DIRECTIONS.map(k => DIRECTIONS[k].assortmentOption.label).join(", ");
-      $("introEyebrow").textContent = "Корпоративный университет · " + labels;
-      $("introMeta").textContent = "До 3,5–5 минут в зависимости от вашего опыта. Ответы используются только для подготовки обучения.";
-    }
-  })();
-
-  $("start").addEventListener("click", () => {
-    $("intro").hidden = true;
-    $("quiz").hidden = false;
-    window.scrollTo(0, 0);
-    render();
-  });
-
-  $("back").addEventListener("click", () => {
-    if (current > 0) { current--; render(); window.scrollTo(0, 0); }
-  });
-
-  $("next").addEventListener("click", () => {
-    const flow = buildFlow();
-    const s = stepDef(flow[current]);
-    if (!validate(s)) return;
-    const newFlow = buildFlow();
-    if (current < newFlow.length - 1) {
-      current++;
-      render();
-      window.scrollTo(0, 0);
-    } else {
-      submit();
-    }
-  });
-
-  function payload() {
-    const labels = (stepKey, ids) => (ids || []).map(id => {
-      const o = COMMON[stepKey].options.find(x => x.id === id);
-      return o ? o.text : id;
-    });
-    const selected = selectedDirectionKeys();
-    const data = {
-      eventId, stage,
-      directions: selected,
-      directionLabels: selected.map(k => DIRECTIONS[k] ? DIRECTIONS[k].assortmentOption.label : k),
-      city: (answers.city || "").trim(),
-      partner: (answers.partner || "").trim(),
-      role: answers.role || "",
-      experience: answers.experience || "",
-      preferredFormats: labels("formats", answers.formats),
-      trainerQuestion: (answers.trainerQuestion || "").trim(),
-      submittedAt: new Date().toISOString()
-    };
-    DIRECTION_ORDER.forEach(k => {
-      if (DIRECTIONS[k] && selected.includes(k)) Object.assign(data, DIRECTIONS[k].buildResult(answers));
-    });
-    return data;
-  }
-
-  async function submit() {
-    const data = payload();
-    window.__SURVEY_DATA__ = data;
-    const btn = $("next");
-    if (SUBMIT_URL) {
-      btn.disabled = true;
-      btn.textContent = "Отправляем…";
-      try {
-        /* mode: "no-cors" — принципиально: Google Apps Script не добавляет
-           CORS-заголовки в ответ, поэтому при обычном fetch с другого домена
-           (например, с GitHub Pages) браузер получает сам POST-запрос
-           доставленным, но не даёт странице прочитать ответ и бросает
-           ошибку — данные при этом всё равно доходят и пишутся в таблицу.
-           С no-cors ответ намеренно "непрозрачный" (нельзя проверить статус),
-           поэтому просто считаем отправку успешной. */
-        await fetch(SUBMIT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(data)
-        });
-      } catch (e) {
-        btn.disabled = false;
-        btn.textContent = "Отправить ответы";
-        $("formMsg").textContent = "Ответы не отправились. Проверьте подключение к интернету и нажмите «Отправить ответы» ещё раз.";
-        return;
-      }
-    }
-    showThanks();
-  }
-
-  function showThanks() {
-    $("quiz").hidden = true;
-    $("thanks").hidden = false;
-    const bits = [];
-    if (eventId) bits.push("Мероприятие: " + eventId);
-    if (stage) bits.push("Этап: " + (stage === "after" ? "после обучения" : stage === "before" ? "до обучения" : stage));
-    $("thanksMeta").textContent = bits.join(". ");
-    if (PROTOTYPE) $("protoTools").hidden = false;
-    window.scrollTo(0, 0);
-  }
-
-  $("downloadJson").addEventListener("click", () => {
-    const blob = new Blob([JSON.stringify(window.__SURVEY_DATA__, null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "anketa_otvety.json";
-    document.body.appendChild(a); a.click(); a.remove();
-  });
-})();
-</script>
 </body>
 </html>
+```
